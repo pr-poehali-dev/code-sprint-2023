@@ -1,149 +1,341 @@
 import { useEffect, useState } from 'react';
 import { cn } from '@/lib/utils';
 
-const images = [
-  'https://cdn.poehali.dev/templates/creative-portfolio-ru/gallery-2.jpg',
-  'https://cdn.poehali.dev/templates/creative-portfolio-ru/gallery-1.jpg',
-  'https://cdn.poehali.dev/templates/creative-portfolio-ru/gallery-4.jpg',
-  'https://cdn.poehali.dev/templates/creative-portfolio-ru/gallery-5.jpg',
+const slides = [
+  {
+    id: 1,
+    bg: 'https://cdn.poehali.dev/projects/adb51761-29a5-483f-b037-84bb3d205e9a/files/64b3ca13-ee73-4507-a81f-bcf0c1de7edb.jpg',
+    tag: 'Слайд 1 · Визитка',
+    title: 'Елизавета Грицаенко',
+    subtitle: 'Мой путь к сердцу педагога',
+    slogan: 'Учить детей, вдохновлять сердцем и создавать контент с душой',
+    content: 'card',
+  },
+  {
+    id: 2,
+    bg: 'https://cdn.poehali.dev/projects/adb51761-29a5-483f-b037-84bb3d205e9a/files/e6b506db-301f-4506-8952-6cfb2b6bacc3.jpg',
+    tag: 'Слайд 2 · Профессия',
+    title: 'Педагог начальных классов',
+    subtitle: 'Архитектор детства',
+    slogan: 'Учить детей, вдохновлять сердцем и создавать контент с душой',
+    content: 'profession',
+  },
+  {
+    id: 3,
+    bg: 'https://cdn.poehali.dev/projects/adb51761-29a5-483f-b037-84bb3d205e9a/files/459bc2ea-a16b-442c-9c03-b7fba3973863.jpg',
+    tag: 'Слайд 3 · Навыки',
+    title: 'Мои суперсилы и цели',
+    subtitle: 'Что умею и к чему стремлюсь',
+    slogan: 'Учить детей, вдохновлять сердцем и создавать контент с душой',
+    content: 'skills',
+  },
+  {
+    id: 4,
+    bg: 'https://cdn.poehali.dev/projects/adb51761-29a5-483f-b037-84bb3d205e9a/files/41dbff71-7fd0-4303-9205-cc1ce578db98.jpg',
+    tag: 'Слайд 4 · Практика',
+    title: 'Проба пера',
+    subtitle: 'Моя гражданская активность',
+    slogan: 'Учить детей, вдохновлять сердцем и создавать контент с душой',
+    content: 'practice',
+  },
+  {
+    id: 5,
+    bg: 'https://cdn.poehali.dev/projects/adb51761-29a5-483f-b037-84bb3d205e9a/files/e6b506db-301f-4506-8952-6cfb2b6bacc3.jpg',
+    tag: 'Слайд 5 · Будущее',
+    title: 'Вектор профессионального развития',
+    subtitle: 'Мои планы и мечты',
+    slogan: 'Учить детей, вдохновлять сердцем и создавать контент с душой',
+    content: 'future',
+  },
 ];
+
+function CardContent({ loaded }: { loaded: boolean }) {
+  return (
+    <div className={cn('transform transition-all duration-1000 delay-200 ease-out', loaded ? 'translate-x-0 opacity-100' : '-translate-x-8 opacity-0')}>
+      <div className="flex flex-col gap-6">
+        <div className="flex flex-wrap gap-3">
+          {[
+            { icon: '🩰', label: 'Танцы', desc: 'грация и ритм' },
+            { icon: '🎥', label: 'Медиа', desc: 'стиль и содержание' },
+            { icon: '🍎', label: 'Мероприятия', desc: 'активная позиция' },
+          ].map((item) => (
+            <div key={item.label} className="flex items-center gap-2 rounded-full px-4 py-2" style={{ background: 'rgba(255,255,255,0.18)', backdropFilter: 'blur(10px)', border: '1px solid rgba(255,255,255,0.3)' }}>
+              <span className="text-lg">{item.icon}</span>
+              <div>
+                <span className="text-sm font-semibold text-white">{item.label}</span>
+                <span className="ml-1 text-xs text-white/70">— {item.desc}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div className="flex flex-col gap-2 rounded-2xl px-5 py-4" style={{ background: 'rgba(255,255,255,0.13)', backdropFilter: 'blur(8px)', border: '1px solid rgba(255,255,255,0.2)' }}>
+          {[
+            { label: 'Имя', value: 'Грицаенко Елизавета Дмитриевна' },
+            { label: 'Возраст', value: '15 лет' },
+            { label: 'Место', value: 'Рыбинский район, п. Песочное' },
+            { label: 'Класс', value: '8-й' },
+          ].map((row) => (
+            <div key={row.label} className="flex gap-3">
+              <span className="w-20 shrink-0 text-xs font-medium" style={{ color: 'rgba(255,200,210,0.9)' }}>{row.label}</span>
+              <span className="text-sm text-white/90">{row.value}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ProfessionContent({ loaded }: { loaded: boolean }) {
+  return (
+    <div className={cn('transform transition-all duration-1000 delay-200 ease-out', loaded ? 'translate-x-0 opacity-100' : '-translate-x-8 opacity-0')}>
+      <div className="flex flex-col gap-4">
+        <p className="text-base leading-relaxed text-white/90">
+          Не просто учить читать и писать — быть наставником, который помогает ребёнку <span style={{ color: '#ffd6e0' }}>полюбить школу</span>. Создавать уют и интерес на первых этапах взросления.
+        </p>
+        <div className="flex flex-col gap-2">
+          <p className="text-xs font-semibold uppercase tracking-widest" style={{ color: 'rgba(255,200,210,0.85)' }}>Почему я выбрала это</p>
+          {[
+            'Мне нравится работать с детьми, видеть их искренние эмоции',
+            'Люблю организовывать мероприятия — это делает учёбу яркой',
+            'Хочу объединить классическое образование с современными медиа',
+          ].map((text, i) => (
+            <div key={i} className="flex items-start gap-3">
+              <span className="mt-1 h-2 w-2 shrink-0 rounded-full" style={{ background: '#f9a8d4' }} />
+              <span className="text-sm text-white/85">{text}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function SkillsContent({ loaded }: { loaded: boolean }) {
+  const skills = [
+    { name: 'Организатор', level: 85 },
+    { name: 'Креативность', level: 92 },
+    { name: 'Коммуникабельность', level: 88 },
+  ];
+  const growth = [
+    'Возрастная психология младших школьников',
+    'Педагогические методики (подготовка к колледжу)',
+    'Медиа-навыки: съёмка, монтаж, обучающий контент',
+  ];
+  return (
+    <div className={cn('transform transition-all duration-1000 delay-200 ease-out', loaded ? 'translate-x-0 opacity-100' : '-translate-x-8 opacity-0')}>
+      <div className="flex flex-col gap-5">
+        <div>
+          <p className="mb-3 text-xs font-semibold uppercase tracking-widest" style={{ color: 'rgba(255,200,210,0.85)' }}>Чем горжусь</p>
+          <div className="flex flex-col gap-3">
+            {skills.map((s) => (
+              <div key={s.name}>
+                <div className="mb-1 flex justify-between">
+                  <span className="text-sm text-white/90">{s.name}</span>
+                  <span className="text-xs text-white/60">{s.level}%</span>
+                </div>
+                <div className="h-2 w-full rounded-full" style={{ background: 'rgba(255,255,255,0.15)' }}>
+                  <div className="h-full rounded-full transition-all duration-1000" style={{ width: `${s.level}%`, background: 'linear-gradient(90deg, #f9a8d4, #fb923c)' }} />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div>
+          <p className="mb-2 text-xs font-semibold uppercase tracking-widest" style={{ color: 'rgba(167,243,208,0.9)' }}>Точки роста</p>
+          {growth.map((g, i) => (
+            <div key={i} className="flex items-start gap-2 py-1">
+              <span className="text-sm" style={{ color: '#86efac' }}>◎</span>
+              <span className="text-sm text-white/80">{g}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function PracticeContent({ loaded }: { loaded: boolean }) {
+  return (
+    <div className={cn('transform transition-all duration-1000 delay-200 ease-out', loaded ? 'translate-x-0 opacity-100' : '-translate-x-8 opacity-0')}>
+      <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-2">
+          {[
+            { icon: '🎉', text: 'Помощь в организации праздника «День Учителя»' },
+            { icon: '🎨', text: 'Участие в оформлении школьного зала' },
+            { icon: '🤝', text: 'Волонтёрство на школьных мероприятиях' },
+            { icon: '📸', text: 'Создание фото- и видеоматериалов о жизни школы' },
+          ].map((item, i) => (
+            <div key={i} className="flex items-center gap-3 rounded-xl px-4 py-2.5" style={{ background: 'rgba(255,255,255,0.12)', backdropFilter: 'blur(8px)' }}>
+              <span className="text-xl">{item.icon}</span>
+              <span className="text-sm text-white/90">{item.text}</span>
+            </div>
+          ))}
+        </div>
+        <div className="rounded-2xl px-4 py-3" style={{ background: 'rgba(249,168,212,0.2)', border: '1px solid rgba(249,168,212,0.3)' }}>
+          <p className="text-sm italic text-white/90">Уже сейчас я не просто наблюдатель — я участник образовательного процесса.</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function FutureContent({ loaded }: { loaded: boolean }) {
+  return (
+    <div className={cn('transform transition-all duration-1000 delay-200 ease-out', loaded ? 'translate-x-0 opacity-100' : '-translate-x-8 opacity-0')}>
+      <div className="flex flex-col gap-4">
+        {[
+          {
+            emoji: '🎯',
+            title: 'Ближайшая цель (2025–2026)',
+            color: '#f9a8d4',
+            items: ['Успешно окончить 9 класс', 'Поступить в Рыбинский педагогический колледж'],
+          },
+          {
+            emoji: '📈',
+            title: 'Среднесрочный план',
+            color: '#86efac',
+            items: ['Глубокое педагогическое образование', 'Совмещать учёбу с практикой в школах', 'Развивать медиа-направление: блог класса, обучающие ролики'],
+          },
+          {
+            emoji: '✨',
+            title: 'Моя мечта',
+            color: '#fde68a',
+            items: ['Стать учителем, который вдохновляет детей своим примером', 'Организовывать яркие события, где каждый раскроет свой талант'],
+          },
+        ].map((block) => (
+          <div key={block.title} className="flex flex-col gap-1">
+            <div className="flex items-center gap-2">
+              <span className="text-base">{block.emoji}</span>
+              <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: block.color }}>{block.title}</span>
+            </div>
+            {block.items.map((item, i) => (
+              <div key={i} className="flex items-start gap-2 pl-6">
+                <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full" style={{ background: block.color }} />
+                <span className="text-sm text-white/85">{item}</span>
+              </div>
+            ))}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
 
 export default function HeroSection() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [prevIndex, setPrevIndex] = useState(0);
 
   useEffect(() => {
     setIsLoaded(true);
     const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % images.length);
-    }, 4000);
-
+      setPrevIndex(currentIndex);
+      setCurrentIndex((prev) => (prev + 1) % slides.length);
+    }, 6000);
     return () => clearInterval(interval);
-  }, []);
+  }, [currentIndex]);
+
+  const slide = slides[currentIndex];
 
   return (
-    <section className="relative h-screen w-full overflow-hidden bg-white">
+    <section className="relative h-screen w-full overflow-hidden" style={{ background: '#1a0a2e' }}>
+      {/* Background images */}
       <div className="absolute inset-0">
-        {images.map((src, index) => (
+        {slides.map((s, index) => (
           <div
-            key={src}
-            className={cn(
-              'absolute inset-0 transition-opacity duration-1000 ease-in-out',
-              currentIndex === index ? 'opacity-100' : 'opacity-0'
-            )}
+            key={s.id}
+            className={cn('absolute inset-0 transition-opacity duration-1200 ease-in-out', currentIndex === index ? 'opacity-100' : 'opacity-0')}
           >
-            <img
-              src={src}
-              alt=""
-              className="h-full w-full object-cover"
-            />
+            <img src={s.bg} alt="" className="h-full w-full object-cover" />
           </div>
         ))}
       </div>
 
-      <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/50 to-transparent" />
+      {/* Pastel gradient overlay */}
+      <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(80,30,80,0.88) 0%, rgba(20,10,50,0.75) 50%, rgba(10,40,60,0.6) 100%)' }} />
 
+      {/* Decorative pastel circles */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        <div className="absolute -left-32 -top-32 h-96 w-96 rounded-full opacity-20" style={{ background: 'radial-gradient(circle, #f9a8d4, transparent 70%)' }} />
+        <div className="absolute -bottom-20 right-0 h-80 w-80 rounded-full opacity-15" style={{ background: 'radial-gradient(circle, #a5f3fc, transparent 70%)' }} />
+        <div className="absolute right-1/3 top-1/2 h-64 w-64 rounded-full opacity-10" style={{ background: 'radial-gradient(circle, #fdba74, transparent 70%)' }} />
+      </div>
+
+      {/* Content */}
       <div className="relative z-10 flex h-full items-center">
         <div className="container mx-auto px-8 md:px-16">
-          <div className="flex max-w-2xl flex-col gap-12">
-            {/* Portrait */}
-            <div
-              className={cn(
-                'transform transition-all duration-1000 ease-out',
-                isLoaded ? 'translate-x-0 opacity-100' : '-translate-x-8 opacity-0'
-              )}
-            >
-              <div className="relative h-48 w-48 overflow-hidden rounded-full border-4 border-white shadow-2xl md:h-64 md:w-64">
-                <img
-                  src="https://cdn.poehali.dev/templates/creative-portfolio-ru/portrait.jpg"
-                  alt="Креативный специалист"
-                  className="h-full w-full object-cover"
-                />
-              </div>
+          <div className="flex max-w-2xl flex-col gap-6">
+
+            {/* Slide tag */}
+            <div className={cn('transform transition-all duration-700 ease-out', isLoaded ? 'translate-y-0 opacity-100' : '-translate-y-4 opacity-0')}>
+              <span className="rounded-full px-4 py-1.5 text-xs font-medium tracking-widest uppercase" style={{ background: 'rgba(249,168,212,0.25)', color: '#fce7f3', border: '1px solid rgba(249,168,212,0.4)', fontFamily: 'Montserrat, sans-serif' }}>
+                {slide.tag}
+              </span>
             </div>
 
-            <div
-              className={cn(
-                'transform transition-all duration-1000 delay-300 ease-out',
-                isLoaded ? 'translate-x-0 opacity-100' : '-translate-x-8 opacity-0'
-              )}
-            >
-              <div className="space-y-4">
-                <p className="text-3xl font-light text-white md:text-4xl lg:text-5xl">
-                  Алексей Иванов
-                </p>
-                <p className="text-xl font-light text-white/80 md:text-2xl">
-                  Креативный директор | Дизайнер
-                </p>
-                <div className="flex gap-6 pt-4">
-                  <a
-                    href="https://t.me/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-white/70 transition-colors hover:text-white"
-                    aria-label="Telegram"
-                  >
-                    <svg
-                      className="h-7 w-7"
-                      fill="currentColor"
-                      viewBox="0 0 24 24"
-                      aria-hidden="true"
-                    >
-                      <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z" />
-                    </svg>
-                  </a>
-                  <a
-                    href="https://vk.com/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-white/70 transition-colors hover:text-white"
-                    aria-label="VKontakte"
-                  >
-                    <svg
-                      className="h-7 w-7"
-                      fill="currentColor"
-                      viewBox="0 0 24 24"
-                      aria-hidden="true"
-                    >
-                      <path d="M15.684 0H8.316C1.592 0 0 1.592 0 8.316v7.368C0 22.408 1.592 24 8.316 24h7.368C22.408 24 24 22.408 24 15.684V8.316C24 1.592 22.408 0 15.684 0zm3.692 17.123h-1.744c-.66 0-.864-.525-2.05-1.727-1.033-1-1.49-1.135-1.745-1.135-.356 0-.458.102-.458.593v1.575c0 .424-.135.678-1.253.678-1.846 0-3.896-1.12-5.339-3.202-2.17-3.043-2.763-5.32-2.763-5.788 0-.254.102-.491.593-.491h1.744c.44 0 .61.203.78.677.863 2.49 2.303 4.675 2.896 4.675.22 0 .322-.102.322-.66V9.721c-.068-1.186-.695-1.287-.695-1.71 0-.203.17-.407.44-.407h2.744c.373 0 .508.203.508.643v3.473c0 .372.17.508.271.508.22 0 .407-.136.814-.542 1.27-1.422 2.18-3.625 2.18-3.625.119-.254.322-.491.763-.491h1.744c.525 0 .644.27.525.643-.22 1.017-2.354 4.031-2.354 4.031-.186.305-.254.44 0 .78.186.254.796.779 1.203 1.253.745.847 1.32 1.558 1.473 2.05.17.49-.085.744-.576.744z" />
-                    </svg>
-                  </a>
-                  <a
-                    href="https://instagram.com/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-white/70 transition-colors hover:text-white"
-                    aria-label="Instagram"
-                  >
-                    <svg
-                      className="h-7 w-7"
-                      fill="currentColor"
-                      viewBox="0 0 24 24"
-                      aria-hidden="true"
-                    >
-                      <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.689-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
-                    </svg>
-                  </a>
-                </div>
-              </div>
+            {/* Title */}
+            <div className={cn('transform transition-all duration-1000 delay-100 ease-out', isLoaded ? 'translate-x-0 opacity-100' : '-translate-x-8 opacity-0')}>
+              <h1 style={{ fontFamily: 'Comfortaa, cursive', fontWeight: 700, lineHeight: 1.15 }} className="text-4xl text-white md:text-5xl lg:text-6xl">
+                {slide.title}
+              </h1>
+              <p style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 300 }} className="mt-2 text-xl text-white/80 md:text-2xl">
+                {slide.subtitle}
+              </p>
+            </div>
+
+            {/* Dynamic content per slide */}
+            {slide.content === 'card' && <CardContent loaded={isLoaded} />}
+            {slide.content === 'profession' && <ProfessionContent loaded={isLoaded} />}
+            {slide.content === 'skills' && <SkillsContent loaded={isLoaded} />}
+            {slide.content === 'practice' && <PracticeContent loaded={isLoaded} />}
+            {slide.content === 'future' && <FutureContent loaded={isLoaded} />}
+
+            {/* Slogan */}
+            <div className={cn('transform transition-all duration-1000 delay-500 ease-out', isLoaded ? 'translate-x-0 opacity-100' : '-translate-x-8 opacity-0')}>
+              <p style={{ fontFamily: 'Comfortaa, cursive', fontWeight: 300, color: 'rgba(253,230,138,0.85)' }} className="text-sm italic md:text-base">
+                «{slide.slogan}»
+              </p>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="absolute bottom-8 right-8 z-20 flex gap-2">
-        {images.map((_, index) => (
+      {/* Slide indicators */}
+      <div className="absolute bottom-8 left-1/2 z-20 flex -translate-x-1/2 items-center gap-3">
+        {slides.map((s, index) => (
           <button
             key={index}
-            onClick={() => setCurrentIndex(index)}
-            className={cn(
-              'h-1 transition-all duration-300',
-              currentIndex === index ? 'w-12 bg-white' : 'w-8 bg-white/40 hover:bg-white/60'
-            )}
+            onClick={() => { setPrevIndex(currentIndex); setCurrentIndex(index); }}
+            className="flex flex-col items-center gap-1 transition-all duration-300"
             aria-label={`Перейти к слайду ${index + 1}`}
-          />
+          >
+            <div className={cn('h-1 rounded-full transition-all duration-300', currentIndex === index ? 'w-10' : 'w-4')}
+              style={{ background: currentIndex === index ? '#f9a8d4' : 'rgba(255,255,255,0.3)' }} />
+            {currentIndex === index && (
+              <span className="text-xs" style={{ color: 'rgba(253,230,138,0.7)', fontFamily: 'Montserrat, sans-serif' }}>{index + 1}/{slides.length}</span>
+            )}
+          </button>
         ))}
       </div>
+
+      {/* Arrow navigation */}
+      <button
+        onClick={() => { const prev = (currentIndex - 1 + slides.length) % slides.length; setPrevIndex(currentIndex); setCurrentIndex(prev); }}
+        className="absolute left-4 top-1/2 z-20 -translate-y-1/2 rounded-full p-3 transition-all hover:scale-110"
+        style={{ background: 'rgba(255,255,255,0.12)', border: '1px solid rgba(255,255,255,0.2)' }}
+        aria-label="Предыдущий слайд"
+      >
+        <svg className="h-5 w-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
+      </button>
+      <button
+        onClick={() => { const next = (currentIndex + 1) % slides.length; setPrevIndex(currentIndex); setCurrentIndex(next); }}
+        className="absolute right-4 top-1/2 z-20 -translate-y-1/2 rounded-full p-3 transition-all hover:scale-110"
+        style={{ background: 'rgba(255,255,255,0.12)', border: '1px solid rgba(255,255,255,0.2)' }}
+        aria-label="Следующий слайд"
+      >
+        <svg className="h-5 w-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
+      </button>
     </section>
   );
 }
