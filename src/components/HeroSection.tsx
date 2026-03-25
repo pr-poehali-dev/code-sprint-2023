@@ -239,7 +239,7 @@ export default function HeroSection() {
   const slide = slides[currentIndex];
 
   return (
-    <section className="relative h-screen w-full overflow-hidden" style={{ background: '#1a0a2e' }}>
+    <section className="relative h-screen w-full overflow-hidden" style={{ background: '#2a2a32' }}>
       {/* Background images */}
       <div className="absolute inset-0">
         {slides.map((s, index) => (
@@ -253,7 +253,7 @@ export default function HeroSection() {
       </div>
 
       {/* Pastel gradient overlay */}
-      <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(80,30,80,0.88) 0%, rgba(20,10,50,0.75) 50%, rgba(10,40,60,0.6) 100%)' }} />
+      <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(40,40,50,0.92) 0%, rgba(55,55,65,0.82) 50%, rgba(40,45,55,0.75) 100%)' }} />
 
       {/* Decorative pastel circles */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
